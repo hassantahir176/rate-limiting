@@ -3,7 +3,7 @@
 require_relative "lib/rate_limiter/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "rate_limiter"
+  spec.name = "ruby_rate_limiter"
   spec.version = RateLimiter::VERSION
   spec.authors = ["Hassan Tahir"]
   spec.email = ["hassantahirjaura@gmail.com"]

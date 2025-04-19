@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rate_limiter (0.1.1)
+    ruby_rate_limiter (0.1.1)
       dalli (~> 3.0)
       rack (~> 2.0)
       redis (~> 4.0)
@@ -37,8 +37,8 @@ PLATFORMS
 DEPENDENCIES
   byebug
   rake (~> 13.0)
-  rate_limiter!
   rspec (~> 3.10)
+  ruby_rate_limiter!
   timecop (~> 0.9.0)
 
 BUNDLED WITH
