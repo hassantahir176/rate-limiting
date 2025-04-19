@@ -1,17 +1,25 @@
 # RateLimiter
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rate_limiter`. To experiment with that code, run `bin/console` for an interactive prompt.
+A flexible rate limiting gem for Rack-based Ruby applications. Provides multiple storage options and easy configuration for API rate limiting.
 
 ## Installation
-
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
 
 Install the gem and add to the application's Gemfile by executing:
 
 ```bash
 bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+```
+
+Alternatively, add this line to your application's Gemfile:
+
+```ruby
+gem 'UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG'
+```
+
+And then execute:
+
+```bash
+$ bundle install
 ```
 
 If bundler is not being used to manage dependencies, install the gem by executing:
@@ -22,17 +30,106 @@ gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
 
 ## Usage
 
-TODO: Write usage instructions here
+### Basic Setup
+
+Add the middleware to your application:
+
+#### For Rails Applications
+
+```ruby
+# config/application.rb
+module YourApp
+  class Application < Rails::Application
+    config.middleware.use RateLimiter::Middleware
+  end
+end
+```
+
+#### For Rack Applications
+
+```ruby
+# config.ru
+require 'rate_limiter'
+
+RateLimiter.configure do |config|
+  config.requests_per_minute = 100
+end
+
+use RateLimiter::Middleware
+run YourApp
+```
+
+### Configuration
+
+Configure the rate limiter with your desired settings:
+
+```ruby
+# config/initializers/rate_limiter.rb (for Rails)
+RateLimiter.configure do |config|
+  config.requests_per_minute = 100  # Number of requests allowed per minute
+  config.storage_type = :memory     # Choose storage type (:memory, :redis, :memcache)
+
+  # Redis configuration (if using Redis storage)
+  config.redis_options = {
+    host: 'localhost',
+    port: 6379
+  }
+end
+```
+
+### Storage Options
+
+The gem supports multiple storage backends:
+
+#### Memory Storage (Default)
+```ruby
+RateLimiter.configure do |config|
+  config.storage_type = :memory
+end
+```
+
+#### Memcache Storage
+```ruby
+RateLimiter.configure do |config|
+  config.storage_type = :memcache
+end
+```
+
+#### Redis Storage
+```ruby
+RateLimiter.configure do |config|
+  config.storage_type = :redis
+  config.redis_options = {
+    host: 'localhost',
+    port: 6379
+  }
+end
+```
+
+### Rate Limit Exceeded Response
+
+When the rate limit is exceeded, the middleware returns:
+
+- Status: `429 Too Many Requests`
+- Body: "Rate limit exceeded. Try again later."
+
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rate_limiter. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/rate_limiter/blob/master/CODE_OF_CONDUCT.md).
+TODO: Update the github url below
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rate_limiter.
+
+1. Fork it
+2. Create your feature branch (`git checkout -b feature/my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin feature/my-new-feature`)
+5. Create a new Pull Request
 
 ## License
 
@@ -40,4 +137,4 @@ The gem is available as open source under the terms of the [MIT License](https:/
 
 ## Code of Conduct
 
-Everyone interacting in the RateLimiter project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/rate_limiter/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the RateLimiter project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](CODE_OF_CONDUCT.md).
