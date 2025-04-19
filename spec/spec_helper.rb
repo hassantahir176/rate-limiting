@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-require "rate_limiter"
+require 'rate_limiter'
+require 'byebug'
+require 'redis'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -11,5 +13,12 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  RSpec.configure do |config|
+    config.before(:each) do
+      # Reset RateLimiter configuration before each test
+      RateLimiter.instance_variable_set(:@config, nil)
+    end
   end
 end
