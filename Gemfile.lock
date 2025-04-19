@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rate_limiter (0.1.0)
+    rate_limiter (0.1.1)
       dalli (~> 3.0)
       rack (~> 2.0)
       redis (~> 4.0)
