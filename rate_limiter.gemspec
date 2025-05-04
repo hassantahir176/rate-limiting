@@ -9,8 +9,12 @@ Gem::Specification.new do |spec|
   spec.email = ["hassantahirjaura@gmail.com"]
 
   spec.summary = "Use this gem to rate limit your API requests."
-  # spec.description = "TODO: Write a longer description or delete this line."
-  # spec.homepage = "TODO: Put your gem's website or public repo URL here."
+  spec.description = "This gem provides a simple and flexible rate limiting mechanism for Rack applications. It allows you to control the rate at which requests are processed, preventing abuse and ensuring fair usage."
+  #TODO: Use same name as the gem
+  spec.homepage = "https://github.com/hassantahir176/rate-limiting"
+  spec.metadata = {
+    "homepage_uri" => "https://github.com/hassantahir176/rate-limiting"
+  }
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0.0"
 
